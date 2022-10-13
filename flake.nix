@@ -72,6 +72,7 @@
         , extraGHCOptions ? { }
         , withHoogle ? true
         , exactDeps ? true
+        , enableProfiling ? false
         , ...
         }:
         let
@@ -122,6 +123,8 @@
           inherit compiler-nix-name;
           inherit cabalProjectFileName;
           modules = extraModules ++ [{
+            enableExecutableProfiling = enableProfiling;
+            enableLibraryProfiling = enableProfiling;
             packages = {
               marlowe.flags.defer-plugin-errors = deferPluginErrors;
               plutus-use-cases.flags.defer-plugin-errors = deferPluginErrors;
